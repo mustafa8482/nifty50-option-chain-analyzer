@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NIFTY 50 F&O Market Analyzer</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <div>
+            <h1>NIFTY 50</h1>
+            <p>F&O Market Analyzer</p>
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            API Connected
+        </div>
+
+    </header>
+
+
+    <main class="dashboard">
+
+
+        <!-- MARKET SUMMARY -->
+
+        <section class="market-card">
+
+            <div>
+
+                <h2>Market Data</h2>
+
+                <p id="marketStatus">
+                    Loading...
+                </p>
+
+            </div>
+
+
+            <div class="price-section">
+
+                <span id="niftyPrice">
+                    --
+                </span>
+
+                <span class="currency">
+                    NIFTY
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- CHART -->
+
+        <section class="chart-placeholder">
+
+            <div class="chart-header">
+
+                <div>
+                    <h2>NIFTY 50 Chart</h2>
+                    <p id="chartInfo">
+                        5 Minute
+                    </p>
+                </div>
+
+
+                <div class="timeframes">
+
+                    <button data-interval="5">
+                        5m
+                    </button>
+
+                    <button data-interval="15">
+                        15m
+                    </button>
+
+                    <button data-interval="30">
+                        30m
+                    </button>
+
+                    <button data-interval="60">
+                        1H
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="indicator-legend">
+
+    <span>
+        <span class="legend-line ema20"></span>
+        EMA 20
+    </span>
+
+    <span>
+        <span class="legend-line ema50"></span>
+        EMA 50
+    </span>
+
+    <span>
+        <span class="legend-line ema200"></span>
+        EMA 200
+    </span>
+
+</div>
+
+<div id="chartArea"></div>
+
+<div id="rsiArea"></div>
+
+<div id="macdArea"></div>
+
+<div class="levels-panel">
+
+    <div class="level-card resistance-card">
+        <span>Resistance</span>
+        <strong id="resistanceValue">--</strong>
+    </div>
+
+    <div class="level-card support-card">
+        <span>Support</span>
+        <strong id="supportValue">--</strong>
+    </div>
+
+</div>
+
+<!-- ========================================
+     OI ANALYSIS CARDS
+======================================== -->
+
+<div class="oi-analysis-cards">
+
+    <div class="oi-card">
+        <span class="oi-card-label">CE OI</span>
+        <strong id="totalCeOi">--</strong>
+    </div>
+
+    <div class="oi-card">
+        <span class="oi-card-label">PE OI</span>
+        <strong id="totalPeOi">--</strong>
+    </div>
+
+    <div class="oi-card">
+        <span class="oi-card-label">PCR</span>
+        <strong id="pcrValue">--</strong>
+    </div>
+
+    <div class="oi-card">
+    <span class="oi-card-label">MAX PAIN</span>
+    <strong id="maxPainValue">--</strong>
+    </div>
+
+</div>
+
+<section class="option-chain-section">
+
+    <div class="section-header">
+        <div>
+            <h2>Option Chain</h2>
+            <p id="optionChainInfo">
+                Loading option chain...
+            </p>
+        </div>
+
+        <div class="option-chain-badge">
+            LIVE
+        </div>
+    </div>
+
+    <div class="option-chain-wrapper">
+
+        <table class="option-chain-table">
+
+            <thead>
+
+                <tr class="group-header">
+
+                    <th colspan="4">
+                        CALLS
+                    </th>
+
+                    <th rowspan="2">
+                        STRIKE
+                    </th>
+
+                    <th colspan="4">
+                        PUTS
+                    </th>
+
+                </tr>
+
+                <tr>
+
+                    <th>LTP</th>
+                    <th>OI</th>
+                    <th>CHG OI</th>
+                    <th>Volume</th>
+
+                    <th>LTP</th>
+                    <th>OI</th>
+                    <th>CHG OI</th>
+                    <th>Volume</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="optionChainBody">
+
+                <tr>
+
+                    <td colspan="9">
+                        Loading...
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+
+        <!-- RAW DATA -->
+
+        <section class="data-card">
+
+            <h2>Latest Market Data</h2>
+
+            <pre id="marketData">
+Loading NIFTY 50 data...
+            </pre>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>
