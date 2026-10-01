@@ -694,13 +694,38 @@ function createChart() {
                     borderColor: "#334155"
                 },
 
+                localization: {
+    timeFormatter: (time) => {
+        const date = new Date(time * 1000);
+
+        return date.toLocaleString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            day: "2-digit",
+            month: "short",
+            year: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+        });
+    }
+},
+
                 timeScale: {
-                    borderColor: "#334155",
+    borderColor: "#334155",
+    timeVisible: true,
+    secondsVisible: false,
 
-                    timeVisible: true,
+    tickMarkFormatter: (time) => {
+        const date = new Date(time * 1000);
 
-                    secondsVisible: false
-                }
+        return date.toLocaleTimeString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+        });
+    }
+}
             }
         );
 
@@ -1331,10 +1356,7 @@ async function loadNiftyData(
                     return {
 
                         time:
-                            Math.floor(
-                                new Date(
-                                    candle[0]
-                                ).getTime() / 1000
+                            Math.floor(new Date(candle[0]).getTime() / 1000
                             ),
 
                         open:
@@ -1406,17 +1428,37 @@ async function loadNiftyData(
             return;
         }
 
+// ========================================
+// PRESERVE CHART ZOOM
+// ========================================
 
-        // ====================================
-        // MAIN CANDLESTICKS
-        // ====================================
+let savedChartRange = null;
 
-        if (candlestickSeries) {
+if (chart && chart.timeScale()) {
+    savedChartRange =
+        chart.timeScale().getVisibleLogicalRange();
+}
 
-            candlestickSeries.setData(
-                uniqueData
-            );
-        }
+// ========================================
+// MAIN CANDLESTICKS
+// ========================================
+
+if (candlestickSeries) {
+    candlestickSeries.setData(
+        uniqueData
+    );
+}
+
+// Restore previous zoom/position
+if (
+    savedChartRange &&
+    chart &&
+    chart.timeScale()
+) {
+    chart.timeScale().setVisibleLogicalRange(
+        savedChartRange
+    );
+}
 
 
         // ====================================
@@ -1805,14 +1847,6 @@ async function loadOptionChain() {
 
     try {
 
-        tableBody.innerHTML = `
-            <tr>
-                <td colspan="9">
-                    Loading option chain...
-                </td>
-            </tr>
-        `;
-
         const response = await fetch(
             "/api/nifty/option-chain-live"
         );
@@ -1837,6 +1871,201 @@ async function loadOptionChain() {
         }
 
         const data = result.data;
+
+        const setupDirection = data.market_scenario || "NEUTRAL";
+
+        let setupInstrument = "WAIT";
+
+        if (setupDirection === "BULLISH") { 
+            setupInstrument = "CE";
+        }
+        else if (setupDirection === "BEARISH") {
+            setupInstrument = "PE";
+        } else {
+            setupInstrument = "WAIT";
+        }
+
+const setupStrike = data.atm || "-";
+
+const setupDirectionEl =
+    document.getElementById("setupDirection");
+
+const setupInstrumentEl =
+    document.getElementById("setupInstrument");
+
+const setupStrikeEl =
+    document.getElementById("setupStrike");
+
+const setupStatusEl =
+    document.getElementById("setupStatus");
+
+if (setupDirectionEl) {
+    setupDirectionEl.textContent = setupDirection;
+}
+
+if (setupInstrumentEl) {
+    setupInstrumentEl.textContent = setupInstrument;
+}
+
+if (setupStrikeEl) {
+    setupStrikeEl.textContent =
+        setupStrike !== "-"
+            ? Number(setupStrike).toLocaleString("en-IN")
+            : "-";
+}
+
+if (setupStatusEl) {
+    setupStatusEl.textContent = setupDirection;
+}
+
+// ========================================
+// STEP 47E - INVALID DATA PROTECTION
+// ========================================
+
+let setupEntry = null;
+let setupStopLoss = null;
+
+if (
+    setupDirection === "BULLISH" ||
+    setupDirection === "BEARISH"
+) {
+    const atmRow = data.chain?.find(
+        row => Number(row.strike) === Number(data.atm)
+    );
+
+    if (atmRow) {
+
+        let optionLtp = null;
+
+        if (setupDirection === "BULLISH") {
+            optionLtp = Number(atmRow?.ce?.ltp);
+        } else {
+            optionLtp = Number(atmRow?.pe?.ltp);
+        }
+
+        if (Number.isFinite(optionLtp) && optionLtp > 0) {
+            setupEntry = optionLtp;
+            setupStopLoss = optionLtp * 0.90;
+        }
+    }
+}
+
+// ========================================
+// STEP 46F - TARGET 1 + TARGET 2
+// ========================================
+
+let setupTarget1 = null;
+let setupTarget2 = null;
+
+if (setupEntry !== null && setupStopLoss !== null) {
+    const risk = setupEntry - setupStopLoss;
+
+    setupTarget1 = setupEntry + risk;
+    setupTarget2 = setupEntry + (risk * 2);
+}
+
+const setupTarget1El =
+    document.getElementById("setupTarget1");
+
+const setupTarget2El =
+    document.getElementById("setupTarget2");
+
+if (setupTarget1El) {
+    setupTarget1El.textContent =
+        setupTarget1 !== null
+            ? `₹${setupTarget1.toFixed(2)}`
+            : "-";
+}
+
+let setupRiskReward = null;
+
+if (
+    setupEntry !== null &&
+    setupStopLoss !== null &&
+    setupTarget2 !== null
+) {
+    const risk = setupEntry - setupStopLoss;
+    const reward = setupTarget2 - setupEntry;
+
+    if (risk > 0) {
+        setupRiskReward = reward / risk;
+    }
+}
+
+const setupRiskRewardEl =
+    document.getElementById("setupRiskReward");
+
+if (setupRiskRewardEl) {
+    setupRiskRewardEl.textContent =
+        setupRiskReward !== null
+            ? `1 : ${setupRiskReward.toFixed(2)}`
+            : "-";
+}
+
+if (setupTarget2El) {
+    setupTarget2El.textContent =
+        setupTarget2 !== null
+            ? `₹${setupTarget2.toFixed(2)}`
+            : "-";
+}
+
+// Update Entry & Stop Loss after calculation
+
+const setupEntryEl =
+    document.getElementById("setupEntry");
+
+const setupStopLossEl =
+    document.getElementById("setupStopLoss");
+
+if (setupEntryEl) {
+    setupEntryEl.textContent =
+        setupEntry !== null
+            ? `₹${setupEntry.toFixed(2)}`
+            : "-";
+}
+
+if (setupStopLossEl) {
+    setupStopLossEl.textContent =
+        setupStopLoss !== null
+            ? `₹${setupStopLoss.toFixed(2)}`
+            : "-";
+}
+
+const setupReasonEl =
+    document.getElementById("setupReason");
+
+if (setupReasonEl) {
+    const reasons = data.scenario_reasons || [];
+
+    if (reasons.length > 0) {
+        setupReasonEl.innerHTML = reasons
+            .map(reason => `<div class="reason-item">• ${reason}</div>`)
+            .join("");
+    } else {
+        setupReasonEl.textContent =
+            "No strong confirmation available.";
+    }
+}
+
+// ========================================
+// STEP 47A - SETUP STATUS STYLE
+// ========================================
+
+if (setupStatusEl) {
+    setupStatusEl.classList.remove(
+        "setup-bullish",
+        "setup-bearish",
+        "setup-neutral"
+    );
+
+    if (setupDirection === "BULLISH") {
+        setupStatusEl.classList.add("setup-bullish");
+    } else if (setupDirection === "BEARISH") {
+        setupStatusEl.classList.add("setup-bearish");
+    } else {
+        setupStatusEl.classList.add("setup-neutral");
+    }
+}
  
 
 // ========================================
@@ -1850,6 +2079,7 @@ if (maxPainElement) {
     maxPainElement.textContent =
         data.max_pain ?? "--";
 }
+
 
 // ========================================
 // OI ANALYSIS CARDS
@@ -1912,6 +2142,23 @@ if (maxPainElement) {
 
             const tr =
                 document.createElement("tr");
+            
+            const atm = Number(data.atm);
+            const strike = Number(row.strike);
+
+            const ceClass =
+                strike === atm
+                    ? "atm-option"
+                    : strike < atm
+                        ? "itm-option"
+                        : "otm-option";
+
+            const peClass =
+                strike === atm
+                    ? "atm-option"
+                    : strike > atm
+                        ? "itm-option"
+                        : "otm-option";
 
             if (
                 Number(row.strike) ===
@@ -1926,11 +2173,16 @@ if (maxPainElement) {
             tr.innerHTML = `
 
                 <!-- CE LTP -->
-                <td>
-                    ${formatNumber(
-                        ce?.ltp
-                    )}
-                </td>
+                <td class="${ceClass}">
+    ${formatNumber(ce?.ltp)}
+    ${
+        ceClass === "itm-option"
+            ? '<span class="option-badge itm-badge">ITM</span>'
+            : ceClass === "otm-option"
+                ? '<span class="option-badge otm-badge">OTM</span>'
+                : ''
+    }
+</td>
 
                 <!-- CE OI -->
                 <td>
@@ -1976,11 +2228,16 @@ if (maxPainElement) {
                 </td>
 
                 <!-- PE LTP -->
-                <td>
-                    ${formatNumber(
-                        pe?.ltp
-                    )}
-                </td>
+                <td class="${peClass}">
+    ${formatNumber(pe?.oi)}
+    ${
+        peClass === "itm-option"
+            ? '<span class="option-badge itm-badge">ITM</span>'
+            : peClass === "otm-option"
+                ? '<span class="option-badge otm-badge">OTM</span>'
+                : ''
+    }
+</td>
 
                 <!-- PE OI -->
                 <td>
@@ -2101,7 +2358,7 @@ loadOptionChain();
 // Refresh every 10 seconds
 setInterval(
     loadOptionChain,
-    10000
+    3000
 );
 
 console.log("OPTION CHAIN SCRIPT LOADED");

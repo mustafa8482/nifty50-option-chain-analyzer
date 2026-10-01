@@ -640,6 +640,61 @@ def get_nifty_option_chain_live():
             highest_ce_oi = ce_oi
             resistance = strike
 
+# ========================================
+# MARKET SCENARIO
+# ========================================
+
+    bullish_score = 0
+    bearish_score = 0
+    scenario_reasons = []
+
+    # Spot vs Support / Resistance
+    if support is not None and spot > support:
+        bullish_score += 1
+        scenario_reasons.append(
+            f"Spot {spot:.2f} is above support {support}"
+        )
+
+    if resistance is not None and spot < resistance:
+        bearish_score += 1
+        scenario_reasons.append(
+            f"Spot {spot:.2f} is below resistance {resistance}"
+        )
+
+    # PCR
+    if pcr > 1:
+        bullish_score += 1
+        scenario_reasons.append(
+            f"PCR is {pcr:.2f}, above 1"
+        )
+
+    elif pcr < 1:
+        bearish_score += 1
+        scenario_reasons.append(
+            f"PCR is {pcr:.2f}, below 1"
+        )
+
+    # CE vs PE OI
+    if total_pe_oi > total_ce_oi:
+        bullish_score += 1
+        scenario_reasons.append(
+            "PE OI is higher than CE OI"
+        )
+
+    elif total_ce_oi > total_pe_oi:
+        bearish_score += 1
+        scenario_reasons.append(
+            "CE OI is higher than PE OI"
+        )
+    
+    # Final scenario
+    if bullish_score > bearish_score:
+        market_scenario = "BULLISH"
+    elif bearish_score > bullish_score:
+        market_scenario = "BEARISH"
+    else:
+        market_scenario = "NEUTRAL"
+
     return {
         "status": "success",
         "data": {
@@ -653,6 +708,10 @@ def get_nifty_option_chain_live():
             "total_pe_oi": total_pe_oi,
             "pcr": round(pcr, 2),
             "max_pain": max_pain,
+            "market_scenario": market_scenario,
+            "bullish_score": bullish_score,
+            "bearish_score": bearish_score,
+            "scenario_reasons": scenario_reasons,
             "chain": option_chain
         }
     }
