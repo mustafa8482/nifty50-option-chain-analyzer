@@ -866,12 +866,39 @@ function createRSIChart() {
                     }
                 },
 
+                localization: {
+                    timeFormatter: (time) => {
+                        const date = new Date(time * 1000);
+
+                        return date.toLocaleString("en-IN", {
+                            timeZone: "Asia/Kolkata",
+                            day: "2-digit",
+                            month: "short",
+                            year: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false
+                        });
+
+                    }
+                }, 
+
                 timeScale: {
                     borderColor: "#334155",
 
                     timeVisible: true,
 
-                    secondsVisible: false
+                    secondsVisible: false,
+                    tickMarkFormatter: (time) => {
+        const date = new Date(time * 1000);
+
+        return date.toLocaleTimeString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+        });
+    }
                 }
             }
         );
@@ -1047,13 +1074,40 @@ function createMACDChart() {
                         "#334155"
                 },
 
+                localization: {
+                    timeFormatter: (time) => {
+                        const date = new Date(time * 1000);
+
+                        return date.toLocaleString("en-IN", {
+                            timeZone: "Asia/Kolkata",
+                            day: "2-digit",
+                            month: "short",
+                            year: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false
+                        });
+
+                    }
+                },
+
                 timeScale: {
                     borderColor:
                         "#334155",
 
                     timeVisible: true,
 
-                    secondsVisible: false
+                    secondsVisible: false,
+                    tickMarkFormatter: (time) => {
+                        const date = new Date(time * 1000);
+
+                        return date.toLocaleTimeString("en-IN", {
+                            timeZone: "Asia/Kolkata",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false
+                        });
+                    }
                 }
             }
         );

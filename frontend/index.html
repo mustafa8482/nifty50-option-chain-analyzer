@@ -102,213 +102,213 @@
 
             <div class="indicator-legend">
 
-    <span>
-        <span class="legend-line ema20"></span>
-        EMA 20
-    </span>
+                <span>
+                    <span class="legend-line ema20"></span>
+                    EMA 20
+                </span>
 
-    <span>
-        <span class="legend-line ema50"></span>
-        EMA 50
-    </span>
+                <span>
+                    <span class="legend-line ema50"></span>
+                    EMA 50
+                </span>
 
-    <span>
-        <span class="legend-line ema200"></span>
-        EMA 200
-    </span>
+                <span>
+                    <span class="legend-line ema200"></span>
+                    EMA 200
+                </span>
 
-</div>
+            </div>
 
-<div id="chartArea"></div>
+            <div id="chartArea"></div>
 
-<div id="rsiArea"></div>
+            <div id="rsiArea"></div>
 
-<div id="macdArea"></div>
+            <div id="macdArea"></div>
 
-<div class="levels-panel">
+            <div class="levels-panel">
 
-    <div class="level-card resistance-card">
-        <span>Resistance</span>
-        <strong id="resistanceValue">--</strong>
-    </div>
+                <div class="level-card resistance-card">
+                    <span>Resistance</span>
+                    <strong id="resistanceValue">--</strong>
+                </div>
 
-    <div class="level-card support-card">
-        <span>Support</span>
-        <strong id="supportValue">--</strong>
-    </div>
+                <div class="level-card support-card">
+                    <span>Support</span>
+                    <strong id="supportValue">--</strong>
+                </div>
 
-</div>
+            </div>
 
-<!-- ========================================
+            <!-- ========================================
      OI ANALYSIS CARDS
 ======================================== -->
 
-<div class="oi-analysis-cards">
+            <div class="oi-analysis-cards">
 
-    <div class="oi-card">
-        <span class="oi-card-label">CE OI</span>
-        <strong id="totalCeOi">--</strong>
-    </div>
+                <div class="oi-card">
+                    <span class="oi-card-label">CE OI</span>
+                    <strong id="totalCeOi">--</strong>
+                </div>
 
-    <div class="oi-card">
-        <span class="oi-card-label">PE OI</span>
-        <strong id="totalPeOi">--</strong>
-    </div>
+                <div class="oi-card">
+                    <span class="oi-card-label">PE OI</span>
+                    <strong id="totalPeOi">--</strong>
+                </div>
 
-    <div class="oi-card">
-        <span class="oi-card-label">PCR</span>
-        <strong id="pcrValue">--</strong>
-    </div>
+                <div class="oi-card">
+                    <span class="oi-card-label">PCR</span>
+                    <strong id="pcrValue">--</strong>
+                </div>
 
-    <div class="oi-card">
-    <span class="oi-card-label">MAX PAIN</span>
-    <strong id="maxPainValue">--</strong>
-    </div>
+                <div class="oi-card">
+                    <span class="oi-card-label">MAX PAIN</span>
+                    <strong id="maxPainValue">--</strong>
+                </div>
 
-</div>
+            </div>
 
-<section class="option-chain-section">
+            <section class="option-chain-section">
 
-    <div class="section-header">
-        <div>
-            <h2>Option Chain</h2>
-            <p id="optionChainInfo">
-                Loading option chain...
-            </p>
-        </div>
+                <div class="section-header">
+                    <div>
+                        <h2>Option Chain</h2>
+                        <p id="optionChainInfo">
+                            Loading option chain...
+                        </p>
+                    </div>
 
-        <div class="option-chain-badge">
-            LIVE
-        </div>
-    </div>
+                    <div class="option-chain-badge">
+                        LIVE
+                    </div>
+                </div>
 
-    <div class="option-chain-wrapper">
+                <div class="option-chain-wrapper">
 
-        <table class="option-chain-table">
+                    <table class="option-chain-table">
 
-            <thead>
+                        <thead>
 
-                <tr class="group-header">
+                            <tr class="group-header">
 
-                    <th colspan="4">
-                        CALLS
-                    </th>
+                                <th colspan="4">
+                                    CALLS
+                                </th>
 
-                    <th rowspan="2">
-                        STRIKE
-                    </th>
+                                <th rowspan="2">
+                                    STRIKE
+                                </th>
 
-                    <th colspan="4">
-                        PUTS
-                    </th>
+                                <th colspan="4">
+                                    PUTS
+                                </th>
 
-                </tr>
+                            </tr>
 
-                <tr>
+                            <tr>
 
-                    <th>LTP</th>
-                    <th>OI</th>
-                    <th>CHG OI</th>
-                    <th>Volume</th>
+                                <th>LTP</th>
+                                <th>OI</th>
+                                <th>CHG OI</th>
+                                <th>Volume</th>
 
-                    <th>LTP</th>
-                    <th>OI</th>
-                    <th>CHG OI</th>
-                    <th>Volume</th>
+                                <th>LTP</th>
+                                <th>OI</th>
+                                <th>CHG OI</th>
+                                <th>Volume</th>
 
-                </tr>
+                            </tr>
 
-            </thead>
+                        </thead>
 
-            <tbody id="optionChainBody">
+                        <tbody id="optionChainBody">
 
-                <tr>
+                            <tr>
 
-                    <td colspan="9">
-                        Loading...
-                    </td>
+                                <td colspan="9">
+                                    Loading...
+                                </td>
 
-                </tr>
+                            </tr>
 
-            </tbody>
+                        </tbody>
 
-        </table>
+                    </table>
 
-    </div>
+                </div>
 
-        <div class="setup-card">
-    <div class="setup-card-header">
-        <h3>Trading Setup</h3>
-        <span id="setupStatus">WAIT</span>
-    </div>
+                <div class="setup-card">
+                    <div class="setup-card-header">
+                        <h3>Trading Setup</h3>
+                        <span id="setupStatus">WAIT</span>
+                    </div>
 
-    <div class="setup-grid">
+                    <div class="setup-grid">
 
-        <div class="setup-item">
-            <span>Direction</span>
-            <strong id="setupDirection">-</strong>
-        </div>
+                        <div class="setup-item">
+                            <span>Direction</span>
+                            <strong id="setupDirection">-</strong>
+                        </div>
 
-        <div class="setup-item">
-            <span>Instrument</span>
-            <strong id="setupInstrument">-</strong>
-        </div>
+                        <div class="setup-item">
+                            <span>Instrument</span>
+                            <strong id="setupInstrument">-</strong>
+                        </div>
 
-        <div class="setup-item">
-            <span>Strike</span>
-            <strong id="setupStrike">-</strong>
-        </div>
+                        <div class="setup-item">
+                            <span>Strike</span>
+                            <strong id="setupStrike">-</strong>
+                        </div>
 
-        <div class="setup-item">
-    <span>Entry</span>
-    <strong id="setupEntry">-</strong>
-</div>
+                        <div class="setup-item">
+                            <span>Entry</span>
+                            <strong id="setupEntry">-</strong>
+                        </div>
 
-<div class="setup-item">
-    <span>Stop Loss</span>
-    <strong id="setupStopLoss">-</strong>
-</div>
+                        <div class="setup-item">
+                            <span>Stop Loss</span>
+                            <strong id="setupStopLoss">-</strong>
+                        </div>
 
-<div class="setup-item">
-    <span>Target 1</span>
-    <strong id="setupTarget1">-</strong>
-</div>
+                        <div class="setup-item">
+                            <span>Target 1</span>
+                            <strong id="setupTarget1">-</strong>
+                        </div>
 
-<div class="setup-item">
-    <span>Target 2</span>
-    <strong id="setupTarget2">-</strong>
-</div>
+                        <div class="setup-item">
+                            <span>Target 2</span>
+                            <strong id="setupTarget2">-</strong>
+                        </div>
 
-<div class="setup-item">
-    <span>Risk / Reward</span>
-    <strong id="setupRiskReward">-</strong>
-</div>
+                        <div class="setup-item">
+                            <span>Risk / Reward</span>
+                            <strong id="setupRiskReward">-</strong>
+                        </div>
 
-<div class="setup-reason">
-    <span>Reason</span>
-    <p id="setupReason">-</p>
-</div>
+                        <div class="setup-reason">
+                            <span>Reason</span>
+                            <p id="setupReason">-</p>
+                        </div>
 
-    </div>
-
-
-</div>
-
-</section>
+                    </div>
 
 
+                </div>
 
-        <!-- RAW DATA -->
+            </section>
 
-        <section class="data-card">
 
-            <h2>Latest Market Data</h2>
 
-            <pre id="marketData">
+            <!-- RAW DATA -->
+
+            <section class="data-card">
+
+                <h2>Latest Market Data</h2>
+
+                <pre id="marketData">
 Loading NIFTY 50 data...
             </pre>
 
-        </section>
+            </section>
 
 
     </main>
