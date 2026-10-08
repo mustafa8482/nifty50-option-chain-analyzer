@@ -325,7 +325,7 @@ function calculateMACD(candles) {
 
         const signalValue =
             signalValues[
-                signalIndex
+            signalIndex
             ];
 
 
@@ -695,37 +695,37 @@ function createChart() {
                 },
 
                 localization: {
-    timeFormatter: (time) => {
-        const date = new Date(time * 1000);
+                    timeFormatter: (time) => {
+                        const date = new Date(time * 1000);
 
-        return date.toLocaleString("en-IN", {
-            timeZone: "Asia/Kolkata",
-            day: "2-digit",
-            month: "short",
-            year: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false
-        });
-    }
-},
+                        return date.toLocaleString("en-IN", {
+                            timeZone: "Asia/Kolkata",
+                            day: "2-digit",
+                            month: "short",
+                            year: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false
+                        });
+                    }
+                },
 
                 timeScale: {
-    borderColor: "#334155",
-    timeVisible: true,
-    secondsVisible: false,
+                    borderColor: "#334155",
+                    timeVisible: true,
+                    secondsVisible: false,
 
-    tickMarkFormatter: (time) => {
-        const date = new Date(time * 1000);
+                    tickMarkFormatter: (time) => {
+                        const date = new Date(time * 1000);
 
-        return date.toLocaleTimeString("en-IN", {
-            timeZone: "Asia/Kolkata",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false
-        });
-    }
-}
+                        return date.toLocaleTimeString("en-IN", {
+                            timeZone: "Asia/Kolkata",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false
+                        });
+                    }
+                }
             }
         );
 
@@ -881,7 +881,7 @@ function createRSIChart() {
                         });
 
                     }
-                }, 
+                },
 
                 timeScale: {
                     borderColor: "#334155",
@@ -890,15 +890,15 @@ function createRSIChart() {
 
                     secondsVisible: false,
                     tickMarkFormatter: (time) => {
-        const date = new Date(time * 1000);
+                        const date = new Date(time * 1000);
 
-        return date.toLocaleTimeString("en-IN", {
-            timeZone: "Asia/Kolkata",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false
-        });
-    }
+                        return date.toLocaleTimeString("en-IN", {
+                            timeZone: "Asia/Kolkata",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false
+                        });
+                    }
                 }
             }
         );
@@ -1482,37 +1482,37 @@ async function loadNiftyData(
             return;
         }
 
-// ========================================
-// PRESERVE CHART ZOOM
-// ========================================
+        // ========================================
+        // PRESERVE CHART ZOOM
+        // ========================================
 
-let savedChartRange = null;
+        let savedChartRange = null;
 
-if (chart && chart.timeScale()) {
-    savedChartRange =
-        chart.timeScale().getVisibleLogicalRange();
-}
+        if (chart && chart.timeScale()) {
+            savedChartRange =
+                chart.timeScale().getVisibleLogicalRange();
+        }
 
-// ========================================
-// MAIN CANDLESTICKS
-// ========================================
+        // ========================================
+        // MAIN CANDLESTICKS
+        // ========================================
 
-if (candlestickSeries) {
-    candlestickSeries.setData(
-        uniqueData
-    );
-}
+        if (candlestickSeries) {
+            candlestickSeries.setData(
+                uniqueData
+            );
+        }
 
-// Restore previous zoom/position
-if (
-    savedChartRange &&
-    chart &&
-    chart.timeScale()
-) {
-    chart.timeScale().setVisibleLogicalRange(
-        savedChartRange
-    );
-}
+        // Restore previous zoom/position
+        if (
+            savedChartRange &&
+            chart &&
+            chart.timeScale()
+        ) {
+            chart.timeScale().setVisibleLogicalRange(
+                savedChartRange
+            );
+        }
 
 
         // ====================================
@@ -1579,37 +1579,37 @@ if (
         }
 
         // ====================================
-// MACD
-// ====================================
+        // MACD
+        // ====================================
 
-const macdData =
-    calculateMACD(
-        uniqueData
-    );
-
-
-if (macdLineSeries) {
-
-    macdLineSeries.setData(
-        macdData.macd
-    );
-}
+        const macdData =
+            calculateMACD(
+                uniqueData
+            );
 
 
-if (signalLineSeries) {
+        if (macdLineSeries) {
 
-    signalLineSeries.setData(
-        macdData.signal
-    );
-}
+            macdLineSeries.setData(
+                macdData.macd
+            );
+        }
 
 
-if (macdHistogramSeries) {
+        if (signalLineSeries) {
 
-    macdHistogramSeries.setData(
-        macdData.histogram
-    );
-}
+            signalLineSeries.setData(
+                macdData.signal
+            );
+        }
+
+
+        if (macdHistogramSeries) {
+
+            macdHistogramSeries.setData(
+                macdData.histogram
+            );
+        }
 
 
         // ====================================
@@ -1618,78 +1618,76 @@ if (macdHistogramSeries) {
 
         const latestCandle =
             uniqueData[
-                uniqueData.length - 1
+            uniqueData.length - 1
             ];
 
 
         const levels =
-        calculateSupportResistance(
-            uniqueData
-        );
-        
+            calculateSupportResistance(
+                uniqueData
+            );
+
 
         const supportElement =
-        document.getElementById(
-            "supportValue"
-        );
+            document.getElementById(
+                "supportValue"
+            );
 
 
         const resistanceElement =
-        document.getElementById(
-            "resistanceValue"
-        );
+            document.getElementById(
+                "resistanceValue"
+            );
 
 
         if (
             supportElement &&
             levels.support !== null
-        ) 
-        
-        {
-        supportElement.textContent =
-        levels.support.toFixed(2);
+        ) {
+            supportElement.textContent =
+                levels.support.toFixed(2);
         }
 
 
         if (
-         resistanceElement &&
-         levels.resistance !== null
-             ) {
+            resistanceElement &&
+            levels.resistance !== null
+        ) {
 
-         resistanceElement.textContent =
-             levels.resistance.toFixed(2);
-             }
+            resistanceElement.textContent =
+                levels.resistance.toFixed(2);
+        }
 
         const trendData =
-    calculateTrend(
-        uniqueData
-    );
+            calculateTrend(
+                uniqueData
+            );
 
 
-const trendElement =
-    document.getElementById(
-        "trendValue"
-    );
+        const trendElement =
+            document.getElementById(
+                "trendValue"
+            );
 
 
-const trendReasonElement =
-    document.getElementById(
-        "trendReason"
-    );
+        const trendReasonElement =
+            document.getElementById(
+                "trendReason"
+            );
 
 
-if (trendElement) {
+        if (trendElement) {
 
-    trendElement.textContent =
-        trendData.trend;
-}
+            trendElement.textContent =
+                trendData.trend;
+        }
 
 
-if (trendReasonElement) {
+        if (trendReasonElement) {
 
-    trendReasonElement.textContent =
-        trendData.reason;
-}
+            trendReasonElement.textContent =
+                trendData.reason;
+        }
 
 
         if (niftyPrice) {
@@ -1721,17 +1719,17 @@ if (trendReasonElement) {
                 .timeScale()
                 .fitContent();
         }
-        
+
         // ====================================
         // FIT MACD
         // ====================================
 
         if (macdChart) {
 
-    macdChart
-        .timeScale()
-        .fitContent();
-}
+            macdChart
+                .timeScale()
+                .fitContent();
+        }
 
 
         // ====================================
@@ -1930,7 +1928,7 @@ async function loadOptionChain() {
 
         let setupInstrument = "WAIT";
 
-        if (setupDirection === "BULLISH") { 
+        if (setupDirection === "BULLISH") {
             setupInstrument = "CE";
         }
         else if (setupDirection === "BEARISH") {
@@ -1939,229 +1937,229 @@ async function loadOptionChain() {
             setupInstrument = "WAIT";
         }
 
-const setupStrike = data.atm || "-";
+        const setupStrike = data.atm || "-";
 
-const setupDirectionEl =
-    document.getElementById("setupDirection");
+        const setupDirectionEl =
+            document.getElementById("setupDirection");
 
-const setupInstrumentEl =
-    document.getElementById("setupInstrument");
+        const setupInstrumentEl =
+            document.getElementById("setupInstrument");
 
-const setupStrikeEl =
-    document.getElementById("setupStrike");
+        const setupStrikeEl =
+            document.getElementById("setupStrike");
 
-const setupStatusEl =
-    document.getElementById("setupStatus");
+        const setupStatusEl =
+            document.getElementById("setupStatus");
 
-if (setupDirectionEl) {
-    setupDirectionEl.textContent = setupDirection;
-}
-
-if (setupInstrumentEl) {
-    setupInstrumentEl.textContent = setupInstrument;
-}
-
-if (setupStrikeEl) {
-    setupStrikeEl.textContent =
-        setupStrike !== "-"
-            ? Number(setupStrike).toLocaleString("en-IN")
-            : "-";
-}
-
-if (setupStatusEl) {
-    setupStatusEl.textContent = setupDirection;
-}
-
-// ========================================
-// STEP 47E - INVALID DATA PROTECTION
-// ========================================
-
-let setupEntry = null;
-let setupStopLoss = null;
-
-if (
-    setupDirection === "BULLISH" ||
-    setupDirection === "BEARISH"
-) {
-    const atmRow = data.chain?.find(
-        row => Number(row.strike) === Number(data.atm)
-    );
-
-    if (atmRow) {
-
-        let optionLtp = null;
-
-        if (setupDirection === "BULLISH") {
-            optionLtp = Number(atmRow?.ce?.ltp);
-        } else {
-            optionLtp = Number(atmRow?.pe?.ltp);
+        if (setupDirectionEl) {
+            setupDirectionEl.textContent = setupDirection;
         }
 
-        if (Number.isFinite(optionLtp) && optionLtp > 0) {
-            setupEntry = optionLtp;
-            setupStopLoss = optionLtp * 0.90;
+        if (setupInstrumentEl) {
+            setupInstrumentEl.textContent = setupInstrument;
         }
-    }
-}
 
-// ========================================
-// STEP 46F - TARGET 1 + TARGET 2
-// ========================================
+        if (setupStrikeEl) {
+            setupStrikeEl.textContent =
+                setupStrike !== "-"
+                    ? Number(setupStrike).toLocaleString("en-IN")
+                    : "-";
+        }
 
-let setupTarget1 = null;
-let setupTarget2 = null;
+        if (setupStatusEl) {
+            setupStatusEl.textContent = setupDirection;
+        }
 
-if (setupEntry !== null && setupStopLoss !== null) {
-    const risk = setupEntry - setupStopLoss;
+        // ========================================
+        // STEP 47E - INVALID DATA PROTECTION
+        // ========================================
 
-    setupTarget1 = setupEntry + risk;
-    setupTarget2 = setupEntry + (risk * 2);
-}
+        let setupEntry = null;
+        let setupStopLoss = null;
 
-const setupTarget1El =
-    document.getElementById("setupTarget1");
+        if (
+            setupDirection === "BULLISH" ||
+            setupDirection === "BEARISH"
+        ) {
+            const atmRow = data.chain?.find(
+                row => Number(row.strike) === Number(data.atm)
+            );
 
-const setupTarget2El =
-    document.getElementById("setupTarget2");
+            if (atmRow) {
 
-if (setupTarget1El) {
-    setupTarget1El.textContent =
-        setupTarget1 !== null
-            ? `₹${setupTarget1.toFixed(2)}`
-            : "-";
-}
+                let optionLtp = null;
 
-let setupRiskReward = null;
+                if (setupDirection === "BULLISH") {
+                    optionLtp = Number(atmRow?.ce?.ltp);
+                } else {
+                    optionLtp = Number(atmRow?.pe?.ltp);
+                }
 
-if (
-    setupEntry !== null &&
-    setupStopLoss !== null &&
-    setupTarget2 !== null
-) {
-    const risk = setupEntry - setupStopLoss;
-    const reward = setupTarget2 - setupEntry;
+                if (Number.isFinite(optionLtp) && optionLtp > 0) {
+                    setupEntry = optionLtp;
+                    setupStopLoss = optionLtp * 0.90;
+                }
+            }
+        }
 
-    if (risk > 0) {
-        setupRiskReward = reward / risk;
-    }
-}
+        // ========================================
+        // STEP 46F - TARGET 1 + TARGET 2
+        // ========================================
 
-const setupRiskRewardEl =
-    document.getElementById("setupRiskReward");
+        let setupTarget1 = null;
+        let setupTarget2 = null;
 
-if (setupRiskRewardEl) {
-    setupRiskRewardEl.textContent =
-        setupRiskReward !== null
-            ? `1 : ${setupRiskReward.toFixed(2)}`
-            : "-";
-}
+        if (setupEntry !== null && setupStopLoss !== null) {
+            const risk = setupEntry - setupStopLoss;
 
-if (setupTarget2El) {
-    setupTarget2El.textContent =
-        setupTarget2 !== null
-            ? `₹${setupTarget2.toFixed(2)}`
-            : "-";
-}
+            setupTarget1 = setupEntry + risk;
+            setupTarget2 = setupEntry + (risk * 2);
+        }
 
-// Update Entry & Stop Loss after calculation
+        const setupTarget1El =
+            document.getElementById("setupTarget1");
 
-const setupEntryEl =
-    document.getElementById("setupEntry");
+        const setupTarget2El =
+            document.getElementById("setupTarget2");
 
-const setupStopLossEl =
-    document.getElementById("setupStopLoss");
+        if (setupTarget1El) {
+            setupTarget1El.textContent =
+                setupTarget1 !== null
+                    ? `₹${setupTarget1.toFixed(2)}`
+                    : "-";
+        }
 
-if (setupEntryEl) {
-    setupEntryEl.textContent =
-        setupEntry !== null
-            ? `₹${setupEntry.toFixed(2)}`
-            : "-";
-}
+        let setupRiskReward = null;
 
-if (setupStopLossEl) {
-    setupStopLossEl.textContent =
-        setupStopLoss !== null
-            ? `₹${setupStopLoss.toFixed(2)}`
-            : "-";
-}
+        if (
+            setupEntry !== null &&
+            setupStopLoss !== null &&
+            setupTarget2 !== null
+        ) {
+            const risk = setupEntry - setupStopLoss;
+            const reward = setupTarget2 - setupEntry;
 
-const setupReasonEl =
-    document.getElementById("setupReason");
+            if (risk > 0) {
+                setupRiskReward = reward / risk;
+            }
+        }
 
-if (setupReasonEl) {
-    const reasons = data.scenario_reasons || [];
+        const setupRiskRewardEl =
+            document.getElementById("setupRiskReward");
 
-    if (reasons.length > 0) {
-        setupReasonEl.innerHTML = reasons
-            .map(reason => `<div class="reason-item">• ${reason}</div>`)
-            .join("");
-    } else {
-        setupReasonEl.textContent =
-            "No strong confirmation available.";
-    }
-}
+        if (setupRiskRewardEl) {
+            setupRiskRewardEl.textContent =
+                setupRiskReward !== null
+                    ? `1 : ${setupRiskReward.toFixed(2)}`
+                    : "-";
+        }
 
-// ========================================
-// STEP 47A - SETUP STATUS STYLE
-// ========================================
+        if (setupTarget2El) {
+            setupTarget2El.textContent =
+                setupTarget2 !== null
+                    ? `₹${setupTarget2.toFixed(2)}`
+                    : "-";
+        }
 
-if (setupStatusEl) {
-    setupStatusEl.classList.remove(
-        "setup-bullish",
-        "setup-bearish",
-        "setup-neutral"
-    );
+        // Update Entry & Stop Loss after calculation
 
-    if (setupDirection === "BULLISH") {
-        setupStatusEl.classList.add("setup-bullish");
-    } else if (setupDirection === "BEARISH") {
-        setupStatusEl.classList.add("setup-bearish");
-    } else {
-        setupStatusEl.classList.add("setup-neutral");
-    }
-}
- 
+        const setupEntryEl =
+            document.getElementById("setupEntry");
 
-// ========================================
-// MAX PAIN
-// ========================================
+        const setupStopLossEl =
+            document.getElementById("setupStopLoss");
 
-const maxPainElement =
-    document.getElementById("maxPainValue");
+        if (setupEntryEl) {
+            setupEntryEl.textContent =
+                setupEntry !== null
+                    ? `₹${setupEntry.toFixed(2)}`
+                    : "-";
+        }
 
-if (maxPainElement) {
-    maxPainElement.textContent =
-        data.max_pain ?? "--";
-}
+        if (setupStopLossEl) {
+            setupStopLossEl.textContent =
+                setupStopLoss !== null
+                    ? `₹${setupStopLoss.toFixed(2)}`
+                    : "-";
+        }
+
+        const setupReasonEl =
+            document.getElementById("setupReason");
+
+        if (setupReasonEl) {
+            const reasons = data.scenario_reasons || [];
+
+            if (reasons.length > 0) {
+                setupReasonEl.innerHTML = reasons
+                    .map(reason => `<div class="reason-item">• ${reason}</div>`)
+                    .join("");
+            } else {
+                setupReasonEl.textContent =
+                    "No strong confirmation available.";
+            }
+        }
+
+        // ========================================
+        // STEP 47A - SETUP STATUS STYLE
+        // ========================================
+
+        if (setupStatusEl) {
+            setupStatusEl.classList.remove(
+                "setup-bullish",
+                "setup-bearish",
+                "setup-neutral"
+            );
+
+            if (setupDirection === "BULLISH") {
+                setupStatusEl.classList.add("setup-bullish");
+            } else if (setupDirection === "BEARISH") {
+                setupStatusEl.classList.add("setup-bearish");
+            } else {
+                setupStatusEl.classList.add("setup-neutral");
+            }
+        }
 
 
-// ========================================
-// OI ANALYSIS CARDS
-// ========================================
-        
+        // ========================================
+        // MAX PAIN
+        // ========================================
+
+        const maxPainElement =
+            document.getElementById("maxPainValue");
+
+        if (maxPainElement) {
+            maxPainElement.textContent =
+                data.max_pain ?? "--";
+        }
+
+
+        // ========================================
+        // OI ANALYSIS CARDS
+        // ========================================
+
         const totalCeOi =
             document.getElementById("totalCeOi");
-        
+
         const totalPeOi =
             document.getElementById("totalPeOi");
-        
+
         const pcrValue =
             document.getElementById("pcrValue");
-        
+
         if (totalCeOi) {
             totalCeOi.textContent =
                 formatOi(data.total_ce_oi);
         }
-        
+
         if (totalPeOi) {
             totalPeOi.textContent =
                 formatOi(data.total_pe_oi);
         }
-        
+
         if (pcrValue) {
             pcrValue.textContent =
                 Number(data.pcr || 0).toFixed(2);
-        }        
+        }
 
         const chain =
             data.chain || [];
@@ -2196,7 +2194,7 @@ if (maxPainElement) {
 
             const tr =
                 document.createElement("tr");
-            
+
             const atm = Number(data.atm);
             const strike = Number(row.strike);
 
@@ -2229,95 +2227,90 @@ if (maxPainElement) {
                 <!-- CE LTP -->
                 <td class="${ceClass}">
     ${formatNumber(ce?.ltp)}
-    ${
-        ceClass === "itm-option"
-            ? '<span class="option-badge itm-badge">ITM</span>'
-            : ceClass === "otm-option"
-                ? '<span class="option-badge otm-badge">OTM</span>'
-                : ''
-    }
+    ${ceClass === "itm-option"
+                    ? '<span class="option-badge itm-badge">ITM</span>'
+                    : ceClass === "otm-option"
+                        ? '<span class="option-badge otm-badge">OTM</span>'
+                        : ''
+                }
 </td>
 
                 <!-- CE OI -->
                 <td>
                     ${formatNumber(
-                        ce?.oi
-                    )}
+                    ce?.oi
+                )}
                 </td>
 
                 <!-- CE CHANGE OI -->
-                <td class="${
-                    Number(ce?.change_oi || 0) > 0
-                        ? "change-oi-positive"
-                        : Number(ce?.change_oi || 0) < 0
-                            ? "change-oi-negative"
-                            : ""
+                <td class="${Number(ce?.change_oi || 0) > 0
+                    ? "change-oi-positive"
+                    : Number(ce?.change_oi || 0) < 0
+                        ? "change-oi-negative"
+                        : ""
                 }">
                     ${formatChangeOI(
-                        ce?.change_oi
-                    )}
+                    ce?.change_oi
+                )}
                 </td>
 
                 <!-- CE VOLUME -->
                 <td>
                     ${formatNumber(
-                        ce?.volume
-                    )}
+                    ce?.volume
+                )}
                 </td>
 
                 <!-- STRIKE -->
                 <td class="strike-cell">
 
                     ${formatNumber(
-                        row.strike
-                    )}
+                    row.strike
+                )}
 
-                    ${
-                        Number(row.strike) ===
-                        Number(data.atm)
-                            ? '<span class="atm-badge">ATM</span>'
-                            : ''
-                    }
+                    ${Number(row.strike) ===
+                    Number(data.atm)
+                    ? '<span class="atm-badge">ATM</span>'
+                    : ''
+                }
 
                 </td>
 
                 <!-- PE LTP -->
                 <td class="${peClass}">
-    ${formatNumber(pe?.oi)}
-    ${
-        peClass === "itm-option"
-            ? '<span class="option-badge itm-badge">ITM</span>'
-            : peClass === "otm-option"
-                ? '<span class="option-badge otm-badge">OTM</span>'
-                : ''
-    }
+    ${formatNumber(pe?.ltp)}
+    ${peClass === "itm-option"
+                    ? '<span class="option-badge itm-badge">ITM</span>'
+                    : peClass === "otm-option"
+                        ? '<span class="option-badge otm-badge">OTM</span>'
+                        : ''
+                }
 </td>
 
                 <!-- PE OI -->
                 <td>
                     ${formatNumber(
-                        pe?.oi
-                    )}
+                    pe?.oi
+                )}
                 </td>
 
                 <!-- PE CHANGE OI -->
-                <td class="${
-                    Number(pe?.change_oi || 0) > 0
-                        ? "change-oi-positive"
-                        : Number(pe?.change_oi || 0) < 0
-                            ? "change-oi-negative"
-                            : ""
+                <td class="${Number(pe?.change_oi || 0) > 0
+                    ? "change-oi-positive"
+                    : Number(pe?.change_oi || 0) < 0
+                        ? "change-oi-negative"
+                        : ""
                 }">
                     ${formatChangeOI(
-                        pe?.change_oi
-                    )}
+                    pe?.change_oi
+                )}
                 </td>
 
                 <!-- PE VOLUME -->
                 <td>
                     ${formatNumber(
-                        pe?.volume
-                    )}
+                    pe?.volume
+                )}
                 </td>
 
             `;
@@ -2437,14 +2430,14 @@ function formatOi(value) {
     if (number >= 10000000) {
         return (
             (number / 10000000)
-            .toFixed(2) + " Cr"
+                .toFixed(2) + " Cr"
         );
     }
 
     if (number >= 100000) {
         return (
             (number / 100000)
-            .toFixed(2) + " L"
+                .toFixed(2) + " L"
         );
     }
 
